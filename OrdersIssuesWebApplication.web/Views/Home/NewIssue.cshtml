@@ -1,0 +1,7 @@
+﻿
+@model int
+<form method="post" action="/home/NewIssue">
+    <input type="text" placeholder="Note" name="note" class="form-control" />
+    <input type="hidden" value="@Model" name="orderId"/>
+    <button class="btn btn-primary">Submit</button>
+</form>

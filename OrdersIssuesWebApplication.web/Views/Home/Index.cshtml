@@ -1,0 +1,41 @@
+﻿@using OrdersIssuesWebApplication.data;
+@model OrdersIssuesWebApplication.web.Models.IndexViewModel
+<div class="row">
+    <a class="btn btn-success" href="/home/NewOrder">New Order</a>
+</div>
+
+<table class="table table-bordered table-striped table-hover" style="margin-top:30px;">
+    <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Resolved Issues</th>
+        <th>Unresolved Issues</th>
+        <th>Action</th>
+        <th>View Details</th>
+    </tr>
+
+    @foreach(Order o in Model.incompletedOrders)
+    {        
+            <tr>
+                <td>@o.Title</td>
+                <td>@o.Date</td>
+                <td>@o.Amount</td>
+                <td>@o.Issues.Where(i => i.Resolved).Count()</td>
+                <td>@o.Issues.Where(i => !i.Resolved).Count()</td>
+                @if (o.Issues.Where(i => !i.Resolved).Any())
+                {
+                    <td><button disabled class="btn btn-danger">Mark Complete</button></td>
+                }
+                else
+                {
+                    <td><button class="btn btn-danger complete" data-id="@o.Id">Mark Complete</button></td>
+                }
+                <td><a class="btn btn-danger" href="/home/SeeDetails?orderId=@o.Id">See Details</a></td>
+            </tr>
+    }
+</table>
+
+@section scripts{
+    <script src="~/Content/JavaScript.js"></script>
+    }

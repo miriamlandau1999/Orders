@@ -1,0 +1,29 @@
+﻿@using OrdersIssuesWebApplication.data
+@model OrdersIssuesWebApplication.web.Models.SeeDetailsViewModel
+
+<h1>Issues for Order @Model.Order.Title placed on @Model.Order.Date.ToShortDateString()</h1>
+<div class="row">
+    <a class="btn btn-success" href="/home/NewIssue?orderId=@Model.Order.Id ">New Issue</a>
+</div>
+
+<table class="table table-bordered table-striped table-hover com-md-6" style="margin-top:30px;">
+    <tr>
+        <th>Note</th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (Issue i in Model.Order.Issues)
+    {
+        if (!i.Resolved)
+        {
+        <tr>
+            <td>@i.Note</td>         
+            <td><button class="btn btn-danger resolve" data-id="@i.Id" data-order-id="@i.OrderId">Mark Resolved</button></td>
+        </tr>
+        }
+    }
+</table>
+@section scripts{
+    <script src="~/Content/IssuesJavaScript.js"></script>
+    }
+
